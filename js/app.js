@@ -1,3 +1,7 @@
+
+var colWidth = 101;
+var rowHeight = 83;
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -18,7 +22,7 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x * colWidth , rowHeight/2 + this.y * rowHeight);
 }
 
 // Now write your own player class
@@ -26,7 +30,8 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 var Player = function() {
-
+    this.x = 2;
+    this.y = 4;
     this.sprite = 'images/char-boy.png';
 }
 
@@ -35,11 +40,27 @@ Player.prototype.update = function(dt) {
 }
 
 Player.prototype.render = function(dt) {
-
+    ctx.drawImage(Resources.get(this.sprite), this.x * colWidth , rowHeight/2 + this.y * rowHeight);
 }
 
-Player.prototype.handleInput = function(dt) {
-
+Player.prototype.handleInput = function(keyCode) {
+    if (keyCode === 'left') {
+        if (this.x > 0) {
+            this.x -= 1;
+        }
+    } else if (keyCode === 'right') {
+        if (this.x < 4) {
+            this.x += 1;
+        }
+    } else if (keyCode === 'down') {
+        if (this.y < 4) {
+            this.y += 1;   
+        }
+    } else {
+        if (this.y > 0) {
+         this.y -= 1;   
+        }
+    }
 }
 
 
