@@ -3,7 +3,10 @@ var colWidth = 101;
 var rowHeight = 83;
 
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(y) {
+    this.y = Math.floor(Math.random()*3);
+    this.x = -2;
+    this.speed = 1 + Math.random()*5;
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -18,6 +21,14 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    if (this.x >= 6){
+        this.x = -2; 
+        this.speed = 1 + Math.random()*5;
+        this.y = Math.floor(Math.random()*3);
+    } else {
+        this.x += this.speed * dt; 
+    }
+    
 }
 
 // Draw the enemy on the screen, required method for game
@@ -39,7 +50,7 @@ Player.prototype.update = function(dt) {
 
 }
 
-Player.prototype.render = function(dt) {
+Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x * colWidth , rowHeight/2 + this.y * rowHeight);
 }
 
@@ -71,6 +82,11 @@ Player.prototype.handleInput = function(keyCode) {
 var allEnemies = [
     //TODO: Add all enemies
 ];
+
+for (var i = 0; i < 3; i++){
+    allEnemies[i] = new Enemy();
+}
+
 
 var player = new Player();
 
