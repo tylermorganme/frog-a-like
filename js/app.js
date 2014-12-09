@@ -3,10 +3,10 @@ var colWidth = 101;
 var rowHeight = 83;
 
 // Enemies our player must avoid
-var Enemy = function(y) {
+var Enemy = function() {
     this.y = Math.floor(Math.random()*3);
     this.x = -2;
-    this.speed = 1 + Math.random()*5;
+    this.speed = 0.25 + Math.random()*5;
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -23,7 +23,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     if (this.x >= 6){
         this.x = -2; 
-        this.speed = 1 + Math.random()*5;
+        this.speed = 0.25 + Math.random()*5;
         this.y = Math.floor(Math.random()*3);
     } else {
         this.x += this.speed * dt; 

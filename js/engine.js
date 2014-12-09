@@ -29,6 +29,8 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+    var tolerance = 0.72;
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -81,6 +83,15 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         detectCollisions();
+    }
+
+    function detectCollisions() {
+        for (var i = 0;i < allEnemies.length; i++) {
+            if (allEnemies[i].y === player.y && allEnemies[i].x > player.x - tolerance && allEnemies[i].x < player.x + tolerance) {
+                player.x = 2;
+                player.y = 4;
+            }
+        }
     }
 
     /* This is called by the update function  and loops through all of the
@@ -136,6 +147,8 @@ var Engine = (function(global) {
             }
         }
 
+        ctx.drawImage(Resources.get('images/Selector.png'), 2 * 101, 5 * 83 - 83/2);
+
 
         renderEntities();
     }
@@ -172,7 +185,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
