@@ -1,12 +1,29 @@
 
 var colWidth = 101;
 var rowHeight = 83;
+var treasureTypes = [
+    {
+        sprite: 'images/Gem Blue.png',
+        value: 1,
+        duration: 5
+    },
+    {
+        sprite: 'images/Gem Green.png',
+        value: 2,
+        duration: 4
+    },
+    {
+        sprite: 'images/Gem Orange.png',
+        value: 3,
+        duration: 3
+    }
+];
 
 // Enemies our player must avoid
 var Enemy = function() {
-    this.y = Math.floor(Math.random()*3);
+    this.y = Math.floor(Math.random()*2.999);
     this.x = -2;
-    this.speed = 0.25 + Math.random()*5;
+    this.speed = 0.25 + Math.random()*4.999;
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -23,8 +40,8 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     if (this.x >= 6){
         this.x = -2; 
-        this.speed = 0.25 + Math.random()*5;
-        this.y = Math.floor(Math.random()*3);
+        this.speed = 0.25 + Math.random()*4.999;
+        this.y = Math.floor(Math.random()*2.999);
     } else {
         this.x += this.speed * dt; 
     }
@@ -74,6 +91,26 @@ Player.prototype.handleInput = function(keyCode) {
     }
 }
 
+var Treasure = function(){
+    this.type = treasureTypes[Math.floor(Math.random()*treasureTypes.length)];
+    this.x = Math.floor(Math.random()*4.9999);
+    this.y = 0 + Math.floor(Math.random()*2.9999);
+    this.sprite = this.type["sprite"];
+    this.createdAt = Date.now();
+}
+
+Treasure.prototype.update = function() {
+    if ((Date.now() - this.createdAt)/1000 >= this.type["duration"]) {
+        treasure = new Treasure();
+    }
+}
+
+Treasure.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x * colWidth , rowHeight/2 + this.y * rowHeight);
+}
+
+
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -89,6 +126,7 @@ for (var i = 0; i < 3; i++){
 
 
 var player = new Player();
+var treasure = new Treasure();
 
 
 // This listens for key presses and sends the keys to your

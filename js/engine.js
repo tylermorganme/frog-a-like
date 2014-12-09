@@ -106,6 +106,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        treasure.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -161,6 +162,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        treasure.render();
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
@@ -186,7 +188,10 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/Selector.png'
+        'images/Selector.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png'
     ]);
     Resources.onReady(init);
 
