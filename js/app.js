@@ -1,21 +1,26 @@
 
 var colWidth = 101;
 var rowHeight = 83;
+var score = 0;
+
 var treasureTypes = [
     {
         sprite: 'images/Gem Blue.png',
         value: 1,
-        duration: 5
+        duration: 5,
+        penalty: 9
     },
     {
         sprite: 'images/Gem Green.png',
         value: 2,
-        duration: 4
+        duration: 4,
+        penalty: 6
     },
     {
         sprite: 'images/Gem Orange.png',
         value: 3,
-        duration: 3
+        duration: 3,
+        penalty: 3
     }
 ];
 
@@ -23,7 +28,7 @@ var treasureTypes = [
 var Enemy = function() {
     this.y = Math.floor(Math.random()*2.999);
     this.x = -2;
-    this.speed = 0.25 + Math.random()*4.999;
+    this.speed = 0.5*(1+score/50) + Math.random()*(1+score/50);
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -40,7 +45,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     if (this.x >= 6){
         this.x = -2; 
-        this.speed = 0.25 + Math.random()*4.999;
+        this.speed = 0.5*(1+score/50) + Math.random()*(1+score/50);
         this.y = Math.floor(Math.random()*2.999);
     } else {
         this.x += this.speed * dt; 
@@ -102,6 +107,16 @@ var Treasure = function(){
 Treasure.prototype.update = function() {
     if ((Date.now() - this.createdAt)/1000 >= this.type["duration"]) {
         treasure = new Treasure();
+        if (score -this.type["penalty"] <= 0 ) {
+            0;
+        } else {
+            score -= this.type["penalty"];
+        }
+    }
+    if (this.x === player.x && this.y === player.y) {
+        score += this.type["value"];
+        treasure = new Treasure();
+        console.log(score);
     }
 }
 

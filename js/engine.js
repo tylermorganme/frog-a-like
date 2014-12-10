@@ -90,6 +90,11 @@ var Engine = (function(global) {
             if (allEnemies[i].y === player.y && allEnemies[i].x > player.x - tolerance && allEnemies[i].x < player.x + tolerance) {
                 player.x = 2;
                 player.y = 4;
+                if (score -25 <= 0 ) {
+                    score = 0;
+                } else {
+                    score -= 25;
+                }
             }
         }
     }
@@ -149,6 +154,13 @@ var Engine = (function(global) {
         }
 
         ctx.drawImage(Resources.get('images/Selector.png'), 2 * 101, 5 * 83 - 83/2);
+
+        ctx.font = "36pt Georgia";
+        ctx.fillStyle = "white";
+        ctx.strokeStyle = "black";
+
+        ctx.fillText("Score: " + score,25,110);
+        ctx.strokeText("Score: " + score,25,110);
 
 
         renderEntities();
