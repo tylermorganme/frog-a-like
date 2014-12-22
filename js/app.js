@@ -108,7 +108,7 @@ Treasure.prototype.update = function() {
     if ((Date.now() - this.createdAt)/1000 >= this.type["duration"]) {
         treasure = new Treasure();
         if (score -this.type["penalty"] <= 0 ) {
-            0;
+            score = 0;
         } else {
             score -= this.type["penalty"];
         }
