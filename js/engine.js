@@ -85,6 +85,7 @@ var Engine = (function(global) {
         detectCollisions();
     }
 
+    //Check for collisions between players and enemies
     function detectCollisions() {
         for (var i = 0;i < allEnemies.length; i++) {
             if (allEnemies[i].y === player.y && allEnemies[i].x > player.x - tolerance && allEnemies[i].x < player.x + tolerance) {
@@ -155,6 +156,7 @@ var Engine = (function(global) {
 
         ctx.drawImage(Resources.get('images/Selector.png'), 2 * 101, 5 * 83 - 83/2);
 
+        //Present score in top left
         ctx.font = "36pt Georgia";
         ctx.fillStyle = "white";
         ctx.strokeStyle = "black";
