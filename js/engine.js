@@ -59,7 +59,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -87,14 +87,26 @@ var Engine = (function(global) {
 
     //Check for collisions between players and enemies
     function detectCollisions() {
+        if (player.y === -1 ){
+            player.home();
+            if (score -50 <= 0 ) {
+                    score = 0;
+                    return;
+                } else {
+                    score -= 50;
+                    return;
+                }
+            return;
+        }
         for (var i = 0;i < allEnemies.length; i++) {
             if (allEnemies[i].y === player.y && allEnemies[i].x > player.x - tolerance && allEnemies[i].x < player.x + tolerance) {
-                player.x = 2;
-                player.y = 4;
+                player.home();
                 if (score -25 <= 0 ) {
                     score = 0;
+                    return;
                 } else {
                     score -= 25;
+                    return;
                 }
             }
         }
@@ -114,12 +126,23 @@ var Engine = (function(global) {
         treasure.update();
     }
 
+
+    /**
+     * Clears the canvas to make sure there are no residual bits of the player or enemies.
+     */
+    function clear() {
+        ctx.rect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle="#ffffff";
+        ctx.fill();
+    }
+
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
      * they are flipbooks creating the illusion of animation but in reality
      * they are just drawing the entire screen over and over.
      */
+
     function render() {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
@@ -140,6 +163,11 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
+
+        var c=document.getElementById("myCanvas");
+
+        clear();
+
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
                 /* The drawImage function of the canvas' context element
@@ -157,8 +185,8 @@ var Engine = (function(global) {
 
         //Present score in top left
         ctx.font = "36pt Georgia";
-        ctx.fillStyle = "white";
-        ctx.strokeStyle = "black";
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = "#000000";
 
         ctx.fillText("Score: " + score,25,110);
         ctx.strokeText("Score: " + score,25,110);
